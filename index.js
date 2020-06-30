@@ -22,3 +22,8 @@ try {
 } finally {
     client.release()
 }
+client.connect();
+client.query('SELECT * FROM clients;', (err, res) => {
+    console.log(err, res)
+    client.end()
+});
