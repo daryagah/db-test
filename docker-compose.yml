@@ -1,0 +1,20 @@
+version: '3'
+services:
+  cloudsql-proxy:
+      container_name: cloudsql-proxy
+      image: gcr.io/cloudsql-docker/gce-proxy:1.16
+      command: /cloud_sql_proxy -dir=/cloudsql -instances=ancient-medium-278316:us-central1:chatbotdb=tcp:0.0.0.0:5432 -credential_file=/secrets/cloudsql/credentials.json
+      ports:
+        - 5432:5432
+      volumes:
+        - /home/darya_gahramanova/ancient-medium-278316-3bcfa66d69ee.json:/secrets/cloudsql/credentials.json
+
+  app:
+    container_name: app
+    build: .
+    ports:
+      - 4000:4000
+    depends_on:
+      - cloudsql-proxy
+    environment:
+      DATABASE_URL: 
