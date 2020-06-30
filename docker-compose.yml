@@ -17,4 +17,4 @@ services:
     depends_on:
       - cloudsql-proxy
     environment:
-      DATABASE_URL: 
+      DATABASE_URL: $DB_URL
