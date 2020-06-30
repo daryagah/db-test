@@ -5,14 +5,20 @@ const PORT = 4000;
 server.listen(PORT);
 console.log(`Server is running on port ${PORT}`);
 
-
-const { Pool, Client } = require('pg');
+const { Client } = require('pg');
 const connectionString = process.env.DATABASE_URL;
 const client = new Client({
     connectionString: connectionString,
 });
 client.connect();
-client.query('SELECT * FROM clients;', (err, res) => {
-    console.log(err, res)
-    client.end()
-});
+try {
+    await client.query('BEGIN')
+    const queryText = 'INSERT INTO clients(client_name, industry, location) VALUES($1, $2, $3)'
+    await client.query(queryText, ['Brian', 'Retail', 'Tampa, FL'])
+    await client.query('COMMIT')
+} catch (e) {
+    await client.query('ROLLBACK')
+    throw e
+} finally {
+    client.release()
+}
