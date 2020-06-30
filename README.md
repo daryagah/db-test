@@ -14,9 +14,6 @@
 10. Go to VM shell and type:
   - git clone [your repo]
   - cd [your repo name]
-  - sudo nano touch docker-compose.yml
-  - In the end add this after DATABASE_URL: postgresql://postgres:[YOUR PASSWORD FOR THE POSTGRES USER]@cloudsql-proxy:5432/marketing
-  - Save the file and close it
-  - sudo docker-compose up --build
+  - sudo DB_URL: postgresql://postgres:[YOUR PASSWORD FOR THE POSTGRES USER]@cloudsql-proxy:5432/marketing docker-compose up --build
 11. You should see that the contents of the database have been printed in the shell.
 12. You can change queries in index.js
