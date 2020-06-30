@@ -11,19 +11,8 @@ const client = new Client({
     connectionString: connectionString,
 });
 client.connect();
-try {
-    await client.query('BEGIN')
-    const queryText = 'INSERT INTO clients(client_name, industry, location) VALUES($1, $2, $3)'
-    await client.query(queryText, ['Brian', 'Retail', 'Tampa, FL'])
-    await client.query('COMMIT')
-} catch (e) {
-    await client.query('ROLLBACK')
-    throw e
-} finally {
-    client.release()
-}
-client.connect();
-client.query('SELECT * FROM clients;', (err, res) => {
+const queryText = 'INSERT INTO clients(client_name, industry, location) VALUES($1, $2, $3)'
+client.query(queryText, ['Brian', 'Retail', 'Tampa, FL'], (err, res) => {
     console.log(err, res)
     client.end()
 });
