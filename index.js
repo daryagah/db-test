@@ -9,9 +9,9 @@ const { Client } = require('pg');
 const client = new Client({
     user: 'postgres',
     host: 'cloudsql-proxy',
-    database: 'mydb',
+    database: 'chatbot_db',
     password: process.env.DB_PWD,
-    port: chatbot_db,
+    port: 5432,
   });
 client.connect();
 client.query('SELECT * FROM users', (err, res) => {
