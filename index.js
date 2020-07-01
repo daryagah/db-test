@@ -11,8 +11,7 @@ const client = new Client({
     connectionString: connectionString,
 });
 client.connect();
-const queryText = 'INSERT INTO clients(client_name, industry, location) VALUES($1, $2, $3)'
-client.query(queryText, ['Brian', 'Retail', 'Tampa, FL'], (err, res) => {
+client.query('SELECT NOW()', (err, res) => {
     console.log(err, res)
     client.end()
 });
