@@ -8,10 +8,14 @@ console.log(`Server is running on port ${PORT}`);
 const { Client } = require('pg');
 const connectionString = process.env.DATABASE_URL;
 const client = new Client({
-    connectionString: connectionString,
-});
+    user: 'postgres',
+    host: 'cloudsql-proxy',
+    database: 'mydb',
+    password: process.env.DB_PWD,
+    port: chatbot_db,
+  });
 client.connect();
-client.query('SELECT NOW()', (err, res) => {
+client.query('SELECT * FROM users', (err, res) => {
     console.log(err, res)
     client.end()
 });
